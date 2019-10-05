@@ -1,2 +1,2 @@
 #Python 
-Python training
+Python Sammerfeld practice
