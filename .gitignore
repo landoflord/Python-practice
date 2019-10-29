@@ -2,3 +2,7 @@
 py3eg/
 test.py
 bible.txt
+project/
+other/
+python_vs_code_WS.code-workspace
+tmp.py
