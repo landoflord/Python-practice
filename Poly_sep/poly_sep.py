@@ -4,10 +4,10 @@ import os
 def main():
     #logic_value = input("Введите значность логики:")
     #var_counter = input("Введите число переменных:")
-    path = "D:\\Vs code Projects\\Poly_sep\\func.txt"
+    path = "D:\\Vs code Projects\\Poly_sep\\functions.txt"
     output = []
-    logic_value = 4
-    var_counter = 2
+    logic_value = 2
+    var_counter = 4
     polynom_degree = 1
     output = x_input_generator(logic_value, var_counter, var_counter, output)
     #output.sort(key = lambda x: [x[j] for j in reversed(range(var_counter))])
@@ -66,7 +66,7 @@ def polynomyal_sep_func_generator (polynom_degree: int, var_counter: int, logic:
                     term[int(x) - 1] = 1
                     eq = eq + ' * x' + x
                 polynom_func.append(term)
-                print(eq)
+                #print(eq)
     else:
         for i in range(polynom_degree):
             #for comb in product(iterator, repeat=i + 1):
@@ -77,7 +77,7 @@ def polynomyal_sep_func_generator (polynom_degree: int, var_counter: int, logic:
                     term[int(x) - 1] = 1
                     eq = eq + ' * x' + x
                 polynom_func.append(term)
-                print(eq)
+                #print(eq)
     n = len(polynom_func)
     for func in range(len(discr_funcs)):
         inequalities_a = []
@@ -140,12 +140,24 @@ def polynomyal_sep_func_generator (polynom_degree: int, var_counter: int, logic:
                 inequalities_a.append(cur_inequlity_a2)
                 inequalities_b.append(cur_inequlity_b1)
                 inequalities_b.append(cur_inequlity_b2)
-        with open(os.path.dirname(os.path.realpath(__file__)) + '\\' + discr_funcs_id[func] +'_A' + '.txt', 'w') as f:
+        with open(os.path.dirname(os.path.realpath(__file__)) + '\\FOR_HACHIYAN' + '\\' + 'a_' + str(polynom_degree) + '_' + discr_funcs_id[func].strip('\n') + '.txt', 'w') as f:
+            first = True
             for i in inequalities_a:
-                print(*i, file=f, sep = ';')
-        with open(os.path.dirname(os.path.realpath(__file__)) + '\\'+ discr_funcs_id[func] +'_B' + '.txt', 'w') as f:
+                if first:
+                    first = False
+                    print(*i, file=f, sep = ';', end = '')
+                else:
+                    print(file=f)
+                    print(*i, file=f, sep = ';', end = '')
+        with open(os.path.dirname(os.path.realpath(__file__)) + '\\FOR_HACHIYAN' + '\\' + 'b_' + str(polynom_degree) + '_' + discr_funcs_id[func].strip('\n') + '.txt', 'w') as f:
+            first = True
             for i in inequalities_b:
-                print(*i, file=f)
+                if first:
+                    first = False
+                    print(*i, file=f, end = '')
+                else:
+                    print(file=f)
+                    print(*i, file=f, end = '')
 
 
 if __name__ == "__main__":
