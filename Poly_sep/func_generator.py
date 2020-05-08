@@ -12,10 +12,9 @@ with open(path, 'r') as func_catalog, open (path_out, 'w') as out:
                 correct = correct.split('f')[1].strip(';') + correct.split('f')[0].rstrip(';')
                 out.write(correct + '\n')
                 correct =''
-            elif i == n - 1:
-                correct += lines[i].replace('\n',';')
-                correct = correct.split('f')[1].strip(';') + correct.split('f')[0].rstrip(';')
-                out.write(correct)
             correct += lines[i].replace('\n',';')
+    correct += lines[n - 1].replace('\n',';')
+    correct = correct.split('f')[1].strip(';') + correct.split('f')[0].rstrip(';')
+    out.write(correct)
 
 

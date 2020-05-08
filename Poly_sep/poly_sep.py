@@ -8,7 +8,7 @@ def main():
     output = []
     logic_value = 2
     var_counter = 4
-    polynom_degree = 1
+    polynom_degree = 4
     output = x_input_generator(logic_value, var_counter, var_counter, output)
     #output.sort(key = lambda x: [x[j] for j in reversed(range(var_counter))])
     functions, func_id = function_dictionary_generator (output, path)
