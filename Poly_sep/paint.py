@@ -12,6 +12,7 @@ def function_points_generator (points, function_from_catalog, ind):
     """
     f_0 = []
     f_1 = []
+    bad_point = False
     func_id = function_from_catalog.split('#')[1].strip()
     func_values =  function_from_catalog.split('#')[0].split(';')
     if ind:
@@ -19,10 +20,14 @@ def function_points_generator (points, function_from_catalog, ind):
     n = len(func_values)
     for i in range(n):
         if func_values[i] == '1':
-            f_1.append(points[i])
+            if i == 13:
+                bad_point = True
+                f_0.append(points[i])
+            else:
+                f_1.append(points[i])
         else:
             f_0.append(points[i])
-    return np.array(f_0), np.array(f_1), func_id
+    return np.array(f_0), np.array(f_1), func_id, bad_point
 
 def transform_for_painting(func_values):
     """ Функция преобразовывает значения исходной функции для рисования иначе точка (0;0;0) будем ближней левой 
@@ -102,12 +107,22 @@ def cube_painting(line):
     ax.add_collection3d(Poly3DCollection(verts, 
     facecolors='black', linewidths=1, edgecolors='black', alpha=.25))
     
-    (f_0, f_1, func_id) = function_points_generator(points, line, True)
-    if f_0.size !=0:
+    (f_0, f_1, func_id, bad_point) = function_points_generator(points, line, True)
+    if f_0.size != 0:
         ax.scatter3D(f_0[:, 0], f_0[:, 1], f_0[:, 2], marker='o', c= 'white', s= 70, linewidths=1,edgecolors='black', alpha = 1)
-    if f_1.size !=0:
+    if f_1.size != 0:
         ax.scatter3D(f_1[:, 0], f_1[:, 1], f_1[:, 2], marker='o', c= 'black', s= 70, linewidths=1,edgecolors='black', alpha = 1)
+    if bad_point:
+        u = np.linspace(0, 2 * np.pi, 100)
+        v = np.linspace(0, np.pi, 100)
+        x = 5 +  0.2 * np.outer(np.cos(u), np.sin(v))
+        y = 2 + 0.2 * np.outer(np.sin(u), np.sin(v))
+        z = 10 + 0.2 * np.outer(np.ones(np.size(u)), np.cos(v))
+        ax.plot_surface(x, y, z,  color='black', linewidth=0, alpha=1)
+
+
     plt.suptitle(f'Номер в каталоге Никонова В. Г.\n {func_id}', fontsize=10)
+    #plt.show()
     plt.savefig(os.path.dirname(os.path.realpath(__file__)) + '\\Pictures_for_catalog'+ '\\' + func_id + '.png', dpi=fig.dpi)
     plt.close(fig)
     
